@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="flowLayout">
+        <attr name="flowLayoutTextSize" format="dimension" />
+        <attr name="verticalSpacingSize" format="dimension" />
+        <attr name="childViewPadding" format="dimension" />
+        <attr name="horizontalSpacingSize" format="color" />
+        <attr name="deleteIconWidth" format="dimension" />
+        <attr name="deleteIconMargin" format="dimension" />
+        <attr name="tagHeight" format="dimension" />
+        <attr name="selectViewBackground" format="reference" />
+        <attr name="selectTextColor" format="color" />
+        <attr name="defaultViewBackground" format="reference" />
+        <attr name="defaultTextColor" format="color" />
+        <attr name="fixViewEditingBackground" format="reference" />
+        <attr name="fixViewTextColor" format="color" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,85 @@
+package com.cydeep.flowlibrarylib;
+
+import android.text.TextPaint;
+import android.util.SparseArray;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by chenyu on 17/3/24.
+ */
+
+public class FlowLayoutUtils {
+    public static SparseArray<ArrayList<TagInfo>> getRow(List<TagInfo> tagInfos, int width, int textSize, int textViewSpacing, int padding) {
+        SparseArray<ArrayList<TagInfo>> sparseArray = new SparseArray();
+        int totalWidth = 0;
+        int row = 0;
+        int measuredWidth;
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(textSize);
+        ArrayList<TagInfo> tagInfoList;
+        for (int i = 0; i < tagInfos.size(); i++) {//25,20,15
+            measuredWidth = (int) (textPaint.measureText(tagInfos.get(i).tagName) + padding);
+            if (totalWidth == 0) {
+                totalWidth += measuredWidth;
+            } else {
+                totalWidth += measuredWidth + textViewSpacing;
+            }
+            if (totalWidth > width) {
+                row++;
+                totalWidth = measuredWidth;
+            }
+            tagInfoList = sparseArray.get(row);
+            if (tagInfoList == null) {
+                tagInfoList = new ArrayList<>();
+                sparseArray.put(row,tagInfoList);
+            }
+            tagInfoList.add(tagInfos.get(i));
+        }
+        return sparseArray;
+    }
+
+    public static SparseArray<ArrayList<TagInfo>> getTagRects(List<TagInfo> tagInfos,int marginTop, int width, int textSize, int height, int textViewSpacing, int verticalSpacing, int padding, onGetTagListener onGetTagListener) {
+        SparseArray<ArrayList<TagInfo>> sparseArray = new SparseArray();
+        ArrayList<TagInfo> tagInfoList;
+        int totalWidth = 0;
+        int row = 0;
+        int measuredWidth;
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(textSize);
+        TagInfo tagInfo;
+        for (int i = 0; i < tagInfos.size(); i++) {
+            tagInfo = tagInfos.get(i);
+            measuredWidth = (int) (textPaint.measureText(tagInfo.tagName) + padding);
+            if (totalWidth == 0) {
+                totalWidth += measuredWidth;
+            } else {
+                totalWidth += measuredWidth + textViewSpacing;
+            }
+            if (totalWidth > width) {
+                row++;
+                totalWidth = measuredWidth;
+            }
+            tagInfo.rect.left = totalWidth - measuredWidth;
+            tagInfo.rect.top = marginTop + row * (height + verticalSpacing);
+            tagInfo.rect.right = totalWidth;
+            tagInfo.rect.bottom =marginTop + row * (height + verticalSpacing) + height;
+            tagInfoList = sparseArray.get(row);
+            if (tagInfoList == null) {
+                tagInfoList = new ArrayList<>();
+                sparseArray.put(row,tagInfoList);
+            }
+            tagInfoList.add(tagInfos.get(i));
+            if (onGetTagListener != null) {
+                onGetTagListener.onGetTag(i,tagInfo);
+            }
+        }
+        return sparseArray;
+    }
+
+    public interface onGetTagListener{
+        void onGetTag(int position, TagInfo tagInfo);
+    }
+}
