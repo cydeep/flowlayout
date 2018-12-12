@@ -6,7 +6,6 @@
 在您gradle中
 
 allprojects {
-
         repositories {
         
             maven { url 'https://jitpack.io' }
