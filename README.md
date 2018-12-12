@@ -4,6 +4,7 @@
 
 怎样配置：
 在您gradle中
+
 allprojects {
 
         repositories {
