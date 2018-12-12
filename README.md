@@ -12,7 +12,7 @@ allprojects {
         
         }
     
-    }
+}
     
 dependencies {
 
