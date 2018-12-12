@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.cydeep.flowlibrarylib.listener.OnInterceptTouchEventListener;
 import com.cydeep.flowlibrarylib.listener.OnTagClickListener;
 import com.cydeep.flowlibrarylib.listener.OnTagSelectListener;
 
@@ -70,6 +71,8 @@ public class FlowLayout extends ViewGroup {
 
     private ArrayList<TagInfo> tagInfos;
     private boolean isSettingAnimation = false;
+
+    private OnInterceptTouchEventListener onInterceptTouchEventListener;
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -185,6 +188,7 @@ public class FlowLayout extends ViewGroup {
 
     /**
      * 当前选中的tagId
+     *
      * @param tagId
      */
     public void setSelectTagId(String tagId) {
@@ -260,9 +264,9 @@ public class FlowLayout extends ViewGroup {
                 if (tagInfo.tagId.equals(tagId) && deleteIconImageViews.size() == 0) {
                     selectButton = button;
                     setSelectTag(button);
-                    setTextViewColor(button,selectViewBackground, selectTextColor);
+                    setTextViewColor(button, selectViewBackground, selectTextColor);
                 } else {
-                    setTextViewColor(button,defaultViewBackground, defaultTextColor);
+                    setTextViewColor(button, defaultViewBackground, defaultTextColor);
                 }
             }
             button.setGravity(Gravity.CENTER);
@@ -283,16 +287,17 @@ public class FlowLayout extends ViewGroup {
         });
     }
 
-    public static void setSelectTag(TextView textView){
+    public static void setSelectTag(TextView textView) {
         textView.setBackgroundResource(R.drawable.tag_select);
         textView.setTextColor(0xffffffff);
     }
-    public static void setUnSelectTag(TextView textView){
+
+    public static void setUnSelectTag(TextView textView) {
         textView.setBackgroundResource(R.drawable.round_rect_gray);
         textView.setTextColor(0xff645e66);
     }
 
-    private void setTextViewColor(TextView textView,int backgroundRes,int color){
+    private void setTextViewColor(TextView textView, int backgroundRes, int color) {
         textView.setBackgroundResource(backgroundRes);
         textView.setTextColor(color);
     }
@@ -393,6 +398,14 @@ public class FlowLayout extends ViewGroup {
     }
 
     @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if (mDragAndDropHandler != null) {
+            mDragAndDropHandler.dispatchDraw(canvas);
+        }
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (mDragAndDropHandler != null) {
             return mDragAndDropHandler.onTouchEvent(event);
@@ -422,7 +435,7 @@ public class FlowLayout extends ViewGroup {
     }
 
     private void sortTag() {
-        rowSparseArray = FlowLayoutUtils.getTagRects(tagInfos,deleteIconMargin, getMeasuredWidth(), (int) (textSize * ViewSizeUtil.getDensity(getContext()) + 0.5f), tagHeight, textViewSpacing, verticalSpacing, childViewPadding, null);
+        rowSparseArray = FlowLayoutUtils.getTagRects(tagInfos, deleteIconMargin, getMeasuredWidth(), (int) (textSize * ViewSizeUtil.getDensity(getContext()) + 0.5f), tagHeight, textViewSpacing, verticalSpacing, childViewPadding, null);
     }
 
     public void startAnimation(final TagInfo lastTagInfo) {
@@ -503,5 +516,20 @@ public class FlowLayout extends ViewGroup {
         return x;
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (mDragAndDropHandler != null && mDragAndDropHandler.isDrag()) {
+            requestDisallowInterceptTouchEvent(true);
+            return true;
+        } else {
+            return super.onInterceptTouchEvent(ev);
+
+        }
+
+    }
+
+//    public void setOnInterceptTouchEventListener(OnInterceptTouchEventListener onInterceptTouchEventListener) {
+//        this.onInterceptTouchEventListener = onInterceptTouchEventListener;
+//    }
 }
 

@@ -29,6 +29,11 @@ public class DragHandler {
     private int firstClickPosition;
     private TagInfo clickTag;
     private boolean isDrag;
+
+    public boolean isDrag() {
+        return isDrag;
+    }
+
     private ImageView delete;
     private BitmapDrawable deleteDrawable;
 
@@ -61,10 +66,12 @@ public class DragHandler {
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                isDrag = false;
                 handled = handleUpEvent();
                 mLastMotionEventY = -1;
                 break;
             case MotionEvent.ACTION_CANCEL:
+                isDrag = false;
                 handled = handleCancelEvent();
                 mLastMotionEventY = -1;
                 break;
@@ -112,7 +119,7 @@ public class DragHandler {
         mSwitchViewAnimator.animateSwitchView(tagInfo);
     }
 
-    public void startDragging(int position) {
+    void startDragging(int position) {
         isDrag = true;
         mMobileView = flowLayout.getChildAt(position);
         if (flowLayout.deleteIconImageViews.size() > 0) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.SparseArray;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.cydeep.flowlibrarylib.FlowLayout;
 import com.cydeep.flowlibrarylib.FlowLayoutUtils;
 import com.cydeep.flowlibrarylib.TagInfo;
 import com.cydeep.flowlibrarylib.ViewSizeUtil;
+import com.cydeep.flowlibrarylib.listener.OnInterceptTouchEventListener;
 import com.cydeep.flowlibrarylib.listener.OnTagClickListener;
 import com.cydeep.flowlibrarylib.listener.OnTagSelectListener;
 
@@ -73,10 +75,15 @@ public class NewsTagsActivity extends BaseActivity {
         pHomeNewsList = getIntent().getStringArrayListExtra("tagList");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tags_info);
+//        View header = View.inflate(this, R.layout.header_listview_tags_info, null);
+
+        recommendNewsTagListView = getView(R.id.news_tag_list_view);
+//        recommendNewsTagListView.addHeaderView(header);
+        listViewAdapter = new ListViewAdapter(this, newsTagUpdateListViewListener);
+
         flowLayout = getView(R.id.newsTag);
         flowLayout.setSelectTagId(currentId);
 
-        listViewAdapter = new ListViewAdapter(this, newsTagUpdateListViewListener);
         flowLayout.setOnTagSelectListener(new OnTagSelectListener() {
             @Override
             public void onTagSelect(boolean isSelect, TextView view) {
@@ -94,18 +101,17 @@ public class NewsTagsActivity extends BaseActivity {
             }
 
         });
-        recommendNewsTagListView = (ListView) getView(R.id.news_tag_list_view);
         newsTagUpdateListViewListener.setOnTagClickListener(new OnTagClickListener() {
             @Override
             public void onTagClick(TagInfo tagInfo) {
                 if (myTagInfos.size() >= 100) {
-                    Toast.makeText(NewsTagsActivity.this, getString(R.string.tags_enough_tips,100), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewsTagsActivity.this, getString(R.string.tags_enough_tips, 100), Toast.LENGTH_SHORT).show();
                 } else {
                     recommondTagInfos.remove(tagInfo);
                     setData();
                     flowLayout.addTag(tagInfo, isEdit);
                     listViewAdapter.notifyDataSetChanged();
-                    recommendNewsTagListView.setSelection(0);
+//                    recommendNewsTagListView.setSelection(0);
                     TagInfo info = myTagInfos.get(myTagInfos.size() - 1);
                     currentId = info.tagId;
                     childPosition = info.childPosition;

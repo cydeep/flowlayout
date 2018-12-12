@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_20"
@@ -64,15 +65,4 @@
         android:textColor="#ff645e66"
         android:textSize="@dimen/sp_16" />
 
-    <ListView
-        android:id="@+id/news_tag_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginRight="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_23"
-        android:descendantFocusability="beforeDescendants"
-        android:divider="@null"
-        android:dividerHeight="@dimen/dp_13"
-        android:listSelector="@android:color/transparent"></ListView>
 </LinearLayout>
