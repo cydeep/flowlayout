@@ -30,11 +30,8 @@ dependencies {
 在布局文件中
 
 <com.cydeep.flowlibrarylib.FlowLayout
-
         android:id="@+id/newsTag"
-        
         android:layout_width="match_parent"
-        
         android:layout_height="wrap_content"
         
         android:layout_marginLeft="@dimen/dp_15"
