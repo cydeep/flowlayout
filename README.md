@@ -17,7 +17,7 @@ allprojects {
     
 dependencies {
 
-     implementation 'com.github.cydeep:flowlayout:v1.0.0'   
+     implementation 'com.github.cydeep:flowlayout:v1.0.1'   
      
 }  
 效果图
