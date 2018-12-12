@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_18">
+
+        <TextView
+            android:id="@+id/tag_my_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:text="我的分类"
+            android:textColor="#ff645e66"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tag_drag_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_toRightOf="@+id/tag_my_sort"
+            android:text="拖拽可移动"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tag_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_12"
+            android:text="编辑"
+            android:textColor="#ff7a1ae0"
+            android:textSize="@dimen/sp_16"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+    <com.cydeep.flowlibrarylib.FlowLayout
+        android:id="@+id/newsTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_23"
+        app:horizontalSpacingSize="@dimen/sp_10"
+        app:flowLayoutTextSize="@dimen/sp_14" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_18"
+        android:text="推荐分类"
+        android:textColor="#ff645e66"
+        android:textSize="@dimen/sp_16" />
+
+    <ListView
+        android:id="@+id/news_tag_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_23"
+        android:descendantFocusability="beforeDescendants"
+        android:divider="@null"
+        android:dividerHeight="@dimen/dp_13"
+        android:listSelector="@android:color/transparent"></ListView>
+</LinearLayout>

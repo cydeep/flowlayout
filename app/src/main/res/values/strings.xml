@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">flowlayout</string>
+    <string name="my_assortment">我的分类</string>
+    <string name="edit">编辑</string>
+    <string name="done">完成</string>
+    <string name="tag_drag_tips">拖拽可排序</string>
+    <string name="tags_enough_tips">不能超过%d个分类</string>
+</resources>
