@@ -52,8 +52,9 @@
         android:layout_marginLeft="@dimen/dp_15"
         android:layout_marginRight="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_23"
-        app:horizontalSpacingSize="@dimen/sp_10"
-        app:flowLayoutTextSize="@dimen/sp_14" />
+        app:defaultTextColor="@color/colorPrimaryDark"
+        app:selectTextColor="#ffF8982D"
+        app:fixViewTextColor="@color/colorAccent" />
 
     <TextView
         android:layout_width="wrap_content"

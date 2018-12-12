@@ -20,9 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.cydeep.flowlibrarylib.listener.OnInterceptTouchEventListener;
 import com.cydeep.flowlibrarylib.listener.OnTagClickListener;
-import com.cydeep.flowlibrarylib.listener.OnTagSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +47,6 @@ public class FlowLayout extends ViewGroup {
     public int deleteIconWidth;
     private boolean isMeasureSuccess;
     private OnTagClickListener onTagClickListener;
-    private OnTagSelectListener onTagSelectListener;
     private List<TextView> recommentLists = new ArrayList<>();
     private String tagId = "";
 
@@ -72,19 +69,27 @@ public class FlowLayout extends ViewGroup {
     private ArrayList<TagInfo> tagInfos;
     private boolean isSettingAnimation = false;
 
-    private OnInterceptTouchEventListener onInterceptTouchEventListener;
-
     public FlowLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.flowLayout, defStyle, 0);
 
-        textViewSpacing = a.getDimensionPixelSize(R.styleable.flowLayout_horizontalSpacingSize, ViewSizeUtil.getCustomDimen(context, 15f));
-        verticalSpacing = a.getDimensionPixelSize(R.styleable.flowLayout_verticalSpacingSize, ViewSizeUtil.getCustomDimen(context, 15f));
-        tagHeight = a.getDimensionPixelSize(R.styleable.flowLayout_tagHeight, ViewSizeUtil.getCustomDimen(context, 28f));
-        childViewPadding = a.getDimensionPixelSize(R.styleable.flowLayout_childViewPadding, ViewSizeUtil.getCustomDimen(context, 26f));
-        textSize = a.getDimensionPixelSize(R.styleable.flowLayout_flowLayoutTextSize, ViewSizeUtil.getCustomDimen(context, 14f)) / ViewSizeUtil.getDensity(context);
-        deleteIconWidth = a.getDimensionPixelSize(R.styleable.flowLayout_deleteIconWidth, ViewSizeUtil.getCustomDimen(context, 29f));
-        deleteIconMargin = a.getDimensionPixelSize(R.styleable.flowLayout_deleteIconMargin, ViewSizeUtil.getCustomDimen(context, 10f));
+        textViewSpacing = ViewSizeUtil.getCustomDimen(context, a.getInt(R.styleable.flowLayout_horizontalSpacingSize, 15));
+        verticalSpacing = ViewSizeUtil.getCustomDimen(context, a.getInt(R.styleable.flowLayout_verticalSpacingSize, 15));
+        tagHeight = ViewSizeUtil.getCustomDimen(context, a.getInt(R.styleable.flowLayout_tagHeight, 28));
+        childViewPadding = ViewSizeUtil.getCustomDimen(context, a.getInt(R.styleable.flowLayout_childViewPadding, 26));
+        textSize = ViewSizeUtil.getCustomDimen(context, a.getInt(R.styleable.flowLayout_flowLayoutTextSize, 14)) * 1.0f / ViewSizeUtil.getDensity(context);
+
+        deleteIconWidth = ViewSizeUtil.getCustomDimen(context,a.getInt(R.styleable.flowLayout_deleteIconWidth, 29));
+        deleteIconMargin = ViewSizeUtil.getCustomDimen(context, a.getInt(R.styleable.flowLayout_deleteIconMargin, 10));
+
+
+//        textViewSpacing = a.getDimensionPixelSize(R.styleable.flowLayout_horizontalSpacingSize, ViewSizeUtil.getCustomDimen(context, 15f));
+//        verticalSpacing = a.getDimensionPixelSize(R.styleable.flowLayout_verticalSpacingSize, ViewSizeUtil.getCustomDimen(context, 15f));
+//        tagHeight = a.getDimensionPixelSize(R.styleable.flowLayout_tagHeight, ViewSizeUtil.getCustomDimen(context, 28f));
+//        childViewPadding = a.getDimensionPixelSize(R.styleable.flowLayout_childViewPadding, ViewSizeUtil.getCustomDimen(context, 26f));
+//        textSize = a.getDimensionPixelSize(R.styleable.flowLayout_flowLayoutTextSize, ViewSizeUtil.getCustomDimen(context, 14f)) / ViewSizeUtil.getDensity(context);
+//        deleteIconWidth = a.getDimensionPixelSize(R.styleable.flowLayout_deleteIconWidth, ViewSizeUtil.getCustomDimen(context, 29f));
+//        deleteIconMargin = a.getDimensionPixelSize(R.styleable.flowLayout_deleteIconMargin, ViewSizeUtil.getCustomDimen(context, 10f));
 
         selectViewBackground = a.getResourceId(R.styleable.flowLayout_selectViewBackground, R.drawable.tag_select);
         selectTextColor = a.getColor(R.styleable.flowLayout_selectTextColor, 0xffffffff);
@@ -120,10 +125,7 @@ public class FlowLayout extends ViewGroup {
                 addDeleteImageView(i);
             }
             for (int i = 0; i < recommentLists.size(); i++) {
-                if (onTagSelectListener != null) {
-                    recommentLists.get(i).setBackgroundResource(defaultViewBackground);
-                    recommentLists.get(i).setTextColor(0xffdbdcde);
-                }
+                setTextViewColor(recommentLists.get(i), fixViewEditingBackground, fixViewEditingTextColor);
                 recommentLists.get(i).setOnClickListener(null);
             }
 
@@ -206,10 +208,6 @@ public class FlowLayout extends ViewGroup {
         this.onTagClickListener = onTagClickListener;
     }
 
-    public void setOnTagSelectListener(OnTagSelectListener onTagSelectListener) {
-        this.onTagSelectListener = onTagSelectListener;
-    }
-
     public void addTags(ArrayList<TagInfo> tagInfos) {
         this.tagInfos = tagInfos;
         for (int i = 0; i < tagInfos.size(); i++) {
@@ -259,11 +257,10 @@ public class FlowLayout extends ViewGroup {
             }
             if (tagId.equals("-1") && i == 0 && deleteIconImageViews.size() == 0) {
                 selectButton = button;
-                setSelectTag(button);
+                setTextViewColor(button, selectViewBackground, selectTextColor);
             } else {
                 if (tagInfo.tagId.equals(tagId) && deleteIconImageViews.size() == 0) {
                     selectButton = button;
-                    setSelectTag(button);
                     setTextViewColor(button, selectViewBackground, selectTextColor);
                 } else {
                     setTextViewColor(button, defaultViewBackground, defaultTextColor);
@@ -287,22 +284,13 @@ public class FlowLayout extends ViewGroup {
         });
     }
 
-    public static void setSelectTag(TextView textView) {
-        textView.setBackgroundResource(R.drawable.tag_select);
-        textView.setTextColor(0xffffffff);
-    }
-
-    public static void setUnSelectTag(TextView textView) {
-        textView.setBackgroundResource(R.drawable.round_rect_gray);
-        textView.setTextColor(0xff645e66);
-    }
 
     private void setTextViewColor(TextView textView, int backgroundRes, int color) {
         textView.setBackgroundResource(backgroundRes);
         textView.setTextColor(color);
     }
 
-    public void setOnLongClick(View button, int i) {
+    void setOnLongClick(View button, int i) {
         if (mDragAndDropHandler != null) {
             final int finalI = i;
             TagInfo tagInfo = (TagInfo) getChildAt(finalI).getTag();
@@ -435,7 +423,7 @@ public class FlowLayout extends ViewGroup {
     }
 
     private void sortTag() {
-        rowSparseArray = FlowLayoutUtils.getTagRects(tagInfos, deleteIconMargin, getMeasuredWidth(), (int) (textSize * ViewSizeUtil.getDensity(getContext()) + 0.5f), tagHeight, textViewSpacing, verticalSpacing, childViewPadding, null);
+        rowSparseArray = FlowLayoutUtils.getTagRects(tagInfos, deleteIconMargin, getMeasuredWidth() - deleteIconMargin, (int) (textSize * ViewSizeUtil.getDensity(getContext()) + 0.5f), tagHeight, textViewSpacing, verticalSpacing, childViewPadding, null);
     }
 
     public void startAnimation(final TagInfo lastTagInfo) {

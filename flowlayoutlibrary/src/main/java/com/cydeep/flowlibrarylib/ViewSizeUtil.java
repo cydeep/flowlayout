@@ -49,14 +49,12 @@ public class ViewSizeUtil {
     }
 
     /**
-     *
      * @param dimen dp值
      * @return
      */
-    public static int getCustomDimen(Context context,float dimen){
+    public static int getCustomDimen(Context context, float dimen) {
         float density = ViewSizeUtil.getScreenSize(context).x / ViewSizeUtil.getDensity(context);
-        int result = (int) (ViewSizeUtil.getDensity(context) * density * dimen / 360f);
-        return result;
+        return (int) ((ViewSizeUtil.getDensity(context) * density * dimen / 360f) + 0.5f);
     }
 
     public static float getDensity(Context context) {

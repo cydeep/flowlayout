@@ -84,23 +84,18 @@ public class NewsTagsActivity extends BaseActivity {
         flowLayout = getView(R.id.newsTag);
         flowLayout.setSelectTagId(currentId);
 
-        flowLayout.setOnTagSelectListener(new OnTagSelectListener() {
+        flowLayout.setOnTagClickListener(new OnTagClickListener() {
             @Override
-            public void onTagSelect(boolean isSelect, TextView view) {
-                if (isSelect) {
-                    NewsTagUtils.setSelectTag(view);
-                } else {
-                    NewsTagUtils.setUnSelectTag(view);
-
-                }
+            public void onTagClick(TagInfo tagInfo) {
+                System.out.println("-------------");
             }
 
             @Override
-            public void onSetEditDefaultColor(TextView view) {
-                NewsTagUtils.setGraySelectTag(view);
-            }
+            public void onTagDelete(TagInfo tagInfo) {
 
+            }
         });
+
         newsTagUpdateListViewListener.setOnTagClickListener(new OnTagClickListener() {
             @Override
             public void onTagClick(TagInfo tagInfo) {
@@ -133,8 +128,8 @@ public class NewsTagsActivity extends BaseActivity {
     private void updateMyTagUi() {
         String[] tagsDefault = getResources().getStringArray(R.array.tags_default);
         String[] tagsRecommend = getResources().getStringArray(R.array.tags_recommend);
-        myTagInfos.addAll(addTags("default", tagsDefault, TagInfo.TYPE_TAG_SERVICE));
-        myTagInfos.addAll(addTags("recommend", tagsRecommend, TagInfo.TYPE_TAG_USER));
+        myTagInfos.addAll(addTags("fix", tagsDefault, TagInfo.TYPE_TAG_SERVICE));
+        myTagInfos.addAll(addTags("default", tagsRecommend, TagInfo.TYPE_TAG_USER));
         flowLayout.setTags(myTagInfos);
         viewHolder
                 .setVisible(R.id.tag_edit, true)

@@ -30,7 +30,7 @@ public class DragHandler {
     private TagInfo clickTag;
     private boolean isDrag;
 
-    public boolean isDrag() {
+    boolean isDrag() {
         return isDrag;
     }
 
@@ -164,7 +164,7 @@ public class DragHandler {
         }
     }
 
-    public TagInfo pointToPosition(int x, int y) {
+    private TagInfo pointToPosition(int x, int y) {
         TagInfo resultTagInfo = null;
         int count = 0;
         int row = 0;
