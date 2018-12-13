@@ -55,6 +55,16 @@ dependencies {
 
 flowLayout.setSelectTagId(currentId);//设置您当前所在栏目，若为-1时，默认第一个栏目是当前选中的栏目
 
+flowLayout.setTags(List<TagInfo> tagInfos);//设置标签数据
+
+flowLayout.enableDragAndDrop();//允许滑动
+
+flowLayout.setIsEdit(true);//设置编辑状态，有删除按钮
+
+ flowLayout.setDefault();//设置标签默认状态不可滑动
+ 
+ flowLayout.setIsEdit(false);//设置非编辑状态，无删除按钮
+
 flowLayout.setOnTagClickListener(new OnTagClickListener() {//设置点击事件
 
             @Override
@@ -68,7 +78,7 @@ flowLayout.setOnTagClickListener(new OnTagClickListener() {//设置点击事件
             
 
             }
-        });
+        });     
         
  标签类型：
  
