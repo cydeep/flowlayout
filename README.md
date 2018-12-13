@@ -59,11 +59,11 @@ flowLayout.setTags(List<TagInfo> tagInfos);//设置标签数据
 
 flowLayout.enableDragAndDrop();//允许滑动
 
-flowLayout.setIsEdit(true);//设置编辑状态，有删除按钮
+flowLayout.setIsEdit(true);//设置编辑状态，有删除按钮,需要在setTags之后调用才会显示
 
- flowLayout.setDefault();//设置标签默认状态不可滑动
+flowLayout.setDefault();//设置标签默认状态不可滑动
  
- flowLayout.setIsEdit(false);//设置非编辑状态，无删除按钮
+flowLayout.setIsEdit(false);//设置非编辑状态，无删除按钮
 
 flowLayout.setOnTagClickListener(new OnTagClickListener() {//设置点击事件
 
