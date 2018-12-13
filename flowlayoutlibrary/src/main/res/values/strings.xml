@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">flowlibrarylib</string>
+    <string name="flowLayout_set_edit_tips">you should setTags first</string>
+
 </resources>

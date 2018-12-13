@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.cydeep.flowlibrarylib.listener.OnTagClickListener;
@@ -120,19 +121,23 @@ public class FlowLayout extends ViewGroup {
     public List<ImageView> deleteIconImageViews = new ArrayList<>();
 
     public void setIsEdit(boolean isEdit) {
-        if (isEdit) {
-            for (int i = 0; i < getTagInfos().size(); i++) {
-                addDeleteImageView(i);
-            }
-            for (int i = 0; i < recommentLists.size(); i++) {
-                setTextViewColor(recommentLists.get(i), fixViewEditingBackground, fixViewEditingTextColor);
-                recommentLists.get(i).setOnClickListener(null);
-            }
+        if (tagInfos != null) {
+            if (isEdit) {
+                for (int i = 0; i < tagInfos.size(); i++) {
+                    addDeleteImageView(i);
+                }
+                for (int i = 0; i < recommentLists.size(); i++) {
+                    setTextViewColor(recommentLists.get(i), fixViewEditingBackground, fixViewEditingTextColor);
+                    recommentLists.get(i).setOnClickListener(null);
+                }
 
-            requestLayout();
+                requestLayout();
+            } else {
+                recommentLists.clear();
+                initData();
+            }
         } else {
-            recommentLists.clear();
-            initData();
+            Toast.makeText(getContext(),R.string.flowLayout_set_edit_tips,Toast.LENGTH_SHORT).show();
         }
     }
 
