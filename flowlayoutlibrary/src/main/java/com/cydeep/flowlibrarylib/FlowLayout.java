@@ -62,11 +62,11 @@ public class FlowLayout extends ViewGroup {
 
     private SparseArray<ArrayList<TagInfo>> rowSparseArray;
 
-    public ArrayList<TagInfo> getTagInfos() {
+    public List<TagInfo> getTagInfos() {
         return tagInfos;
     }
 
-    private ArrayList<TagInfo> tagInfos;
+    private List<TagInfo> tagInfos;
     private boolean isSettingAnimation = false;
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyle) {
@@ -198,7 +198,7 @@ public class FlowLayout extends ViewGroup {
     }
 
 
-    public void setTags(ArrayList<TagInfo> tagInfos) {
+    public void setTags(List<TagInfo> tagInfos) {
         addTags(tagInfos);
         requestLayout();
     }
@@ -208,7 +208,7 @@ public class FlowLayout extends ViewGroup {
         this.onTagClickListener = onTagClickListener;
     }
 
-    public void addTags(ArrayList<TagInfo> tagInfos) {
+    public void addTags(List<TagInfo> tagInfos) {
         this.tagInfos = tagInfos;
         for (int i = 0; i < tagInfos.size(); i++) {
             addListViewTextView(tagInfos, i);
