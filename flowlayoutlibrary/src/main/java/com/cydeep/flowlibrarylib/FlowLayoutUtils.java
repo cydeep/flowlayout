@@ -12,6 +12,15 @@ import java.util.List;
  */
 
 public class FlowLayoutUtils {
+    /**
+     *
+     * @param tagInfos 需要排列的标签数据
+     * @param width 一行标签的宽度
+     * @param textSize
+     * @param textViewSpacing 标签的间距
+     * @param padding 标签文字和边界的距离
+     * @return
+     */
     public static SparseArray<ArrayList<TagInfo>> getRow(List<TagInfo> tagInfos, int width, int textSize, int textViewSpacing, int padding) {
         SparseArray<ArrayList<TagInfo>> sparseArray = new SparseArray();
         int totalWidth = 0;
